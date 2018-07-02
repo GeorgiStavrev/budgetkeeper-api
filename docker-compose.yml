@@ -21,5 +21,17 @@ services:
       POSTGRES_DB: budgetkeeper
     volumes:
       - budget_data:/var/lib/postgresql/data
+  initdb:
+    build:
+      context: .
+      dockerfile: Dockerfile.initdb
+    environment:
+     - DB_HOST=db
+    links:
+      - db
+    depends_on:
+      - db
+    volumes:
+     - .:/usr/src/app
 volumes:
   budget_data: {}

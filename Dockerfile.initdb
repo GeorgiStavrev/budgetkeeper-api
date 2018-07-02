@@ -1,0 +1,10 @@
+FROM python:3.6
+
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+COPY requirements.txt ./requirements.txt
+RUN pip install -r requirements.txt
+COPY initdb.py ./initdb.py
+
+ENTRYPOINT ["python", "initdb.py", "--force"]
