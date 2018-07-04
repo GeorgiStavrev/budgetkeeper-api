@@ -3,3 +3,5 @@ asyncpg==0.15.0
 asyncpgsa==0.20.1
 sqlalchemy==1.2.0
 click==6.7
+psycopg2
+python-dateutil==2.7.3

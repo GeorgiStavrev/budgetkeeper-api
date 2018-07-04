@@ -7,8 +7,8 @@ build:
 clean_win:
 	powershell .\utils\docker-clear.ps1
 db:
-	docker-compose up db --force-recreate -d 
+	docker-compose up --force-recreate -d db
 initdb:
-	docker-compose up initdb
+	docker-compose up --force-recreate -d initdb
 
 .PHONY: install

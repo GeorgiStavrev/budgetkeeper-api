@@ -10,11 +10,11 @@ services:
       - db
     ports:
       - "8000:8080"
-    command: "python app.py"
+    command: "python run_server.py"
   db:
     image: postgres:alpine
     ports:
-      - "5433:5432"
+      - "5432:5432"
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_USER: budgetkeeper_api
