@@ -9,4 +9,5 @@ def setup_routes(app):
     # Expenses endpoint
     app.router.add_get('/expenses/monthly', expenses.get_monthly)
     app.router.add_get('/expenses/today', expenses.get_today)
-    app.router.add_post('/expenses', expenses.post)  
+    app.router.add_post('/expenses', expenses.post)
+    app.router.add_put('/expenses/{id}', expenses.put)

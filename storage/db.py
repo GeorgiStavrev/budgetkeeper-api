@@ -44,3 +44,12 @@ class ExpensesRepository:
         sess.add(expense)
         sess.commit()
         sess.close()
+    
+    def update(self, data, id):
+        sess = self.db.get_session()
+        expense = sess.query(Expenses).filter_by(id=id).first()
+        if expense:
+            expense.sum = data['sum']
+            expense.name = data['name']
+        sess.commit()
+        sess.close()

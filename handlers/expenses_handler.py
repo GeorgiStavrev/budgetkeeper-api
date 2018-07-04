@@ -29,3 +29,15 @@ async def post(request):
         print(str(e))
         response_obj = { 'status': 'failed', 'reason': str(e)}
         return web.Response(text=json.dumps(response_obj), status=500)
+
+async def put(request):
+    try:
+        data = await request.json()
+        id = request.match_info.get('id')
+        request.app.db.expenses_repository.update(data, id)
+        response_obj = { 'status': 'success' }
+        return web.Response(text=json.dumps(response_obj), status=200)
+    except Exception as e:
+        print(str(e))
+        response_obj = { 'status': 'failed', 'reason': str(e)}
+        return web.Response(text=json.dumps(response_obj), status=500)
