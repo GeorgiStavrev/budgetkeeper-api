@@ -6,7 +6,7 @@ async def error_middleware(request, handler):
         response = await handler(request)
         if response.status != 404:
             return response
-        message = response.message
+        message = response.text
     except web.HTTPException as ex:
         if ex.status != 404:
             raise
