@@ -8,8 +8,12 @@ from dateutil import parser as date_parser
 Base = declarative_base()
 
 class StorageProvider:
-    def __init__(self, config, verbose=False):
-        connString = 'postgres://{}:{}@{}:{}/{}'.format(config['user'], config['password'], config['host'], config['port'], config['database'])
+    def __init__(self, dbhost, config, verbose=False):
+        host = dbhost
+        if not host:
+            host = config['host']
+        print('DBHOST is {}'.format(host))
+        connString = 'postgres://{}:{}@{}:{}/{}'.format(config['user'], config['password'], host, config['port'], config['database'])
         self.engine = create_engine(connString, echo=verbose)
         self.Session = sessionmaker(bind=self.engine)
     
@@ -80,3 +84,6 @@ class ExpensesRepository:
         sess.close()
 
         return expense is not None
+
+    def close(self):
+        self.db.close()

@@ -1,7 +1,7 @@
 install:
 	pip install -r requirements.txt
 run: # Build and run the api 
-	docker-compose up api
+	docker-compose up --force-recreate api
 build:
 	docker-compose build
 clean_win:

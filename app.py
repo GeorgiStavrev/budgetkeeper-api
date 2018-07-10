@@ -10,8 +10,10 @@ from config.app import default
 
 from storage.db import StorageProvider, ExpensesRepository
 import config.app.default as config
+import os
 
 def bootstrap(loop=None):
+    print("Bootstrapping the app.")
     if not loop:
         loop = asyncio.get_event_loop()
     
@@ -37,10 +39,10 @@ def _swallow_exceptions_set_startup_fail(f):
 async def init_pg(app):
     """Initialize Postgres engine."""
     print("Initializing database.")
-    storage = StorageProvider(config.DATABASE, verbose=True)
+    dbhost = os.environ['DBHOST'] if 'DBHOST' in os.environ else ''
+    storage = StorageProvider(dbhost, config.DATABASE, verbose=True)
     storage.set_up()
     storage.expenses_repository = ExpensesRepository(storage)
-    print(storage)
     app.db = storage
 
 async def close_pg(app):
