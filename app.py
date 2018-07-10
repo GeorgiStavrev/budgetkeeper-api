@@ -38,12 +38,24 @@ def _swallow_exceptions_set_startup_fail(f):
 @_swallow_exceptions_set_startup_fail
 async def init_pg(app):
     """Initialize Postgres engine."""
-    print("Initializing database.")
-    dbhost = os.environ['DBHOST'] if 'DBHOST' in os.environ else ''
-    storage = StorageProvider(dbhost, config.DATABASE, verbose=True)
+    print("Initializing database connection.")
+    dbconfig = config.DATABASE
+    dbconfig['host'] = os.environ['DBHOST'] if 'DBHOST' in os.environ else dbconfig['host']
+    dbconfig['port'] = os.environ['DBPORT'] if 'DBPORT' in os.environ else dbconfig['port']
+    dbconfig['password'] = os.environ['DBPASS'] if 'DBPASS' in os.environ else dbconfig['password']
+    dbconfig['user'] = os.environ['DBUSER'] if 'DBUSER' in os.environ else dbconfig['user']
+    dbconfig['database'] = os.environ['DBNAME'] if 'DBNAME' in os.environ else dbconfig['database']
+
+    storage = StorageProvider(config.DATABASE, verbose=True)
+
+    print("Initializing database schema.")
     storage.set_up()
+
+    print("Initializing expenses repository.")
     storage.expenses_repository = ExpensesRepository(storage)
     app.db = storage
+
+    print("Database initialized.")
 
 async def close_pg(app):
     """Close connection to Postgres."""

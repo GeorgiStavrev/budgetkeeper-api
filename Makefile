@@ -10,5 +10,7 @@ db:
 	docker-compose up --force-recreate -d db
 initdb:
 	docker-compose up --force-recreate -d initdb
+deploy:
+	sh ./build_and_upload.sh
 
 .PHONY: install
