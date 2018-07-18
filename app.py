@@ -8,7 +8,9 @@ from middleware.error import error_middleware
 from router import setup_routes
 from config.app import default
 
-from storage.db import StorageProvider, ExpensesRepository
+from storage.db import StorageProvider
+from storage.repositories.expenses_repository import ExpensesRepository
+from storage.repositories.budgets_repository import BudgetsRepository
 import config.app.default as config
 import os
 
@@ -32,7 +34,8 @@ def _swallow_exceptions_set_startup_fail(f):
             return await f(app)
         except Exception as e:
             app.startup_exceptions.append(e)
-            #logging.exception("Exception during startup function '%s'", f.__name__)
+            print("Exception during startup function '%s'", f.__name__)
+            print(e)
     return wrapper
 
 @_swallow_exceptions_set_startup_fail
@@ -53,6 +56,9 @@ async def init_pg(app):
 
     print("Initializing expenses repository.")
     storage.expenses_repository = ExpensesRepository(storage)
+
+    print("Initializing budgets repository.")
+    storage.budgets_repository = BudgetsRepository(storage)
     app.db = storage
 
     print("Database initialized.")
