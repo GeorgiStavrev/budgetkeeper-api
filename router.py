@@ -2,6 +2,7 @@ from aiohttp import web
 import handlers.healthcheck_handler as healthcheck
 import handlers.expenses_handler as expenses
 import handlers.budgets_handler as budgets
+import handlers.auth_handler as auth
 
 def setup_routes(app):
     # Health endpoint
@@ -18,3 +19,4 @@ def setup_routes(app):
     app.router.add_post('/budgets', budgets.post)
     app.router.add_put('/budgets/{id}', budgets.put)
     app.router.add_delete('/budgets/{id}', budgets.delete)
+    app.router.add_post('/auth/login', auth.login)

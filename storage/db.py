@@ -30,7 +30,7 @@ class Expenses(Base):
 class User(Base):
     __tablename__ = "users"
     id = Column('id', Integer, primary_key=True)
-    name = Colum('email', String)
+    name = Column('email', String)
     password = Column('password', String)
 
 class Budgets(Base):
