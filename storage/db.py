@@ -27,7 +27,7 @@ class Expenses(Base):
     def to_json(self):
         return { 'id': self.id, 'name': self.name, 'date': self.date.isoformat(), 'sum': self.sum }
 
-class User(Base):
+class Users(Base):
     __tablename__ = "users"
     id = Column('id', Integer, primary_key=True)
     name = Column('email', String)

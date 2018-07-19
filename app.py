@@ -11,6 +11,7 @@ from config.app import default
 from storage.db import StorageProvider
 from storage.repositories.expenses_repository import ExpensesRepository
 from storage.repositories.budgets_repository import BudgetsRepository
+from storage.repositories.users_repository import UsersRepository
 import config.app.default as config
 import os
 
@@ -59,6 +60,10 @@ async def init_pg(app):
 
     print("Initializing budgets repository.")
     storage.budgets_repository = BudgetsRepository(storage)
+
+    print("Initializing users repository.")
+    storage.users_repository = UsersRepository(storage)
+
     app.db = storage
 
     print("Database initialized.")
