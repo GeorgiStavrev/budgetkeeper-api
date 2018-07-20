@@ -4,7 +4,9 @@ from datetime import datetime, timedelta
 from calendar import monthrange
 from dateutil import tz
 from handlers.constants import DEFAULT_LIMIT, DEFAULT_OFFSET
+from utils.auth import authorize
 
+@authorize
 async def get_monthly(request):
     limit, offset = _get_special_params(request)
 
@@ -17,6 +19,7 @@ async def get_monthly(request):
     json_data =[r.to_json() for r in results]
     return web.json_response(data=json_data, status=200)
 
+@authorize
 async def get_today(request):
     limit, offset = _get_special_params(request)
 
@@ -28,6 +31,7 @@ async def get_today(request):
     json_data =[r.to_json() for r in results]
     return web.json_response(data=json_data, status=200)
 
+@authorize
 async def get(request):
     id = int(request.match_info.get('id'))
     result = request.app.db.expenses_repository.get_by_id(id)
@@ -37,6 +41,7 @@ async def get(request):
     else:
         return web.Response(text='Not Found', status=404)
 
+@authorize
 async def post(request):
     try:
         data = await request.json()
@@ -48,6 +53,7 @@ async def post(request):
         response_obj = { 'status': 'failed', 'reason': str(e)}
         return web.Response(text=json.dumps(response_obj), status=500)
 
+@authorize
 async def put(request):
     try:
         data = await request.json()
@@ -65,6 +71,7 @@ async def put(request):
         response_obj = { 'status': 'failed', 'reason': str(e)}
         return web.Response(text=json.dumps(response_obj), status=500)
 
+@authorize
 async def delete(request):
     try:
         data = await request.json()
@@ -82,6 +89,7 @@ async def delete(request):
         response_obj = { 'status': 'failed', 'reason': str(e)}
         return web.Response(text=json.dumps(response_obj), status=500)
 
+@authorize
 def _get_special_params(request):
     limit = int(request.query.get('limit')) if request.query.get('limit') else DEFAULT_LIMIT
     offset = int(request.query.get('offset')) if request.query.get('offset') else DEFAULT_OFFSET

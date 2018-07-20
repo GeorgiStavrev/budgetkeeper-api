@@ -4,6 +4,7 @@ import asyncio
 import handlers.healthcheck_handler as healthcheck
 import handlers.expenses_handler as expenses
 from middleware.error import error_middleware
+from middleware.auth import auth_middleware
 
 from router import setup_routes
 from config.app import default
@@ -20,7 +21,7 @@ def bootstrap(loop=None):
     if not loop:
         loop = asyncio.get_event_loop()
     
-    app = web.Application(loop=loop, middlewares=[error_middleware])
+    app = web.Application(loop=loop, middlewares=[error_middleware, auth_middleware])
     app.on_startup.append(init_pg)
     app.on_cleanup.append(close_pg)
     setup_routes(app)
