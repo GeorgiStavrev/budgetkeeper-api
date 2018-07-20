@@ -17,23 +17,25 @@ class StorageProvider:
     def get_session(self):
         return self.Session()
 
-class Expenses(Base):
-    __tablename__ = "expenses"
+class Entry(Base):
+    __tablename__ = "entries"
     id = Column('id', Integer, primary_key=True)
+    kind = Column('kind', Integer)
     name = Column('name', String)
     date = Column('date', DateTime)
     sum = Column('sum', REAL)
 
     def to_json(self):
-        return { 'id': self.id, 'name': self.name, 'date': self.date.isoformat(), 'sum': self.sum }
+        return { 'id': self.id, 'kind': self.kind, 'name': self.name, 'date': self.date.isoformat(), 'sum': self.sum }
 
-class Users(Base):
+class User(Base):
     __tablename__ = "users"
     id = Column('id', Integer, primary_key=True)
-    name = Column('email', String)
-    password = Column('password', String)
+    email = Column('email', String)
+    hashed_password = Column('hashed_password', String)
+    salt = Column('salt', String)
 
-class Budgets(Base):
+class Budget(Base):
     __tablename__ = "budgets"
     id = Column('id', Integer, primary_key=True)
     name = Column('name', String)

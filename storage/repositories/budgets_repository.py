@@ -1,4 +1,4 @@
-from storage.db import Budgets
+from storage.db import Budget
 
 class BudgetsRepository:
     def __init__(self, db):
@@ -6,18 +6,18 @@ class BudgetsRepository:
         
     def get_by_id(self, id):
         sess = self.db.get_session()
-        return sess.query(Budgets).filter_by(id=id).first()
+        return sess.query(Budget).filter_by(id=id).first()
 
     def add(self, data):
         sess = self.db.get_session()
-        budget = Budgets(name=data['name'], sum=data['amount'])
+        budget = Budget(name=data['name'], sum=data['amount'])
         sess.add(budget)
         sess.commit()
         sess.close()
     
     def update(self, data, id):
         sess = self.db.get_session()
-        budget = sess.query(Budgets).filter_by(id=id).first()
+        budget = sess.query(Budget).filter_by(id=id).first()
         
         if budget:
             budget.sum = data['sum']
@@ -30,7 +30,7 @@ class BudgetsRepository:
     
     def delete(self, id):
         sess = self.db.get_session()
-        budget = sess.query(Budgets).filter_by(id=id).first()
+        budget = sess.query(Budget).filter_by(id=id).first()
 
         if budget:
             sess.delete(budget)

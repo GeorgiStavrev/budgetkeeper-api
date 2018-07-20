@@ -20,3 +20,4 @@ def setup_routes(app):
     app.router.add_put('/budgets/{id}', budgets.put)
     app.router.add_delete('/budgets/{id}', budgets.delete)
     app.router.add_post('/auth/login', auth.login)
+    app.router.add_post('/auth/signup', auth.signup)

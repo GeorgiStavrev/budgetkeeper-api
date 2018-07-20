@@ -8,7 +8,7 @@ JWT_EXP_DELTA_SECONDS = 20
 
 async def create_jwt_token(username):
     payload = {
-        'user_id': user.id,
+        'user_id': username,
         'exp': datetime.utcnow() + timedelta(seconds=JWT_EXP_DELTA_SECONDS)
     }
     
