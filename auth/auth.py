@@ -16,7 +16,3 @@ async def create_jwt_token(username):
 
 async def decode_jwt_token(jwt_token):
     return jwt.decode(jwt_token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
-
-def authorize(func):
-    func.requires_authorization = True
-    return func

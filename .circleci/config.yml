@@ -34,18 +34,6 @@ jobs:
             . venv/bin/activate
             pip install -r requirements.txt
 
-      - run:
-          name: Docker login
-          command: |
-            docker login -u $DCKR_USER -p $DCKR_PASS
-
-      - run:
-          name: deploy to aws
-          command: |
-            sudo apt-get install python-dev
-            sudo pip install awscli
-            sudo make deploy
-
       - save_cache:
           paths:
             - ./venv
